@@ -2,11 +2,11 @@ import './App.css'
 
 function App() {
 
-  return (
-    <>
-      <h1>Games Play</h1>
-    </>
-  )
+    return (
+        <div id="box">
+            <h1>Games Play</h1>
+        </div>
+    )
 }
 
 export default App
