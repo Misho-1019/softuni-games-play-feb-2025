@@ -55,7 +55,7 @@ export default function GameDetails({
             {/* <!-- Bonus --> */}
             {/* <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) --> */}
 
-            <CreateComments email={email} />
+            <CreateComments email={email} gameId={gameId} />
 
         </section>
     )
