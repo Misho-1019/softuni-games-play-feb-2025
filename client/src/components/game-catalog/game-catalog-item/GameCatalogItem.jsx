@@ -10,7 +10,7 @@ export default function GameCatalogItem({
                 <img src={imageUrl} />
                 <h6>{category}</h6>
                 <h2>{title}</h2>
-                <a href="#" className="details-button">Details</a>
+                <a href={`/games/${_id}/details`} className="details-button">Details</a>
             </div>
 
         </div>
