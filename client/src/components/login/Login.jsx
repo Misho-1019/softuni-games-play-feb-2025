@@ -1,8 +1,21 @@
-export default function Login() {
+import { Link, useNavigate } from "react-router";
+
+export default function Login({
+    onLogin,
+}) {
+    const navigate = useNavigate()
+
+    const loginAction = (formData) => {
+        const email = formData.get('email')
+
+        onLogin(email)
+    
+        navigate(`/games`)
+    }
     return (
         // <!-- Login Page ( Only for Guest users ) -->
         <section id="login-page" className="auth">
-            <form id="login">
+            <form id="login" action={loginAction}>
 
                 <div className="container">
                     <div className="brand-logo"></div>
@@ -14,7 +27,7 @@ export default function Login() {
                     <input type="password" id="login-password" name="password" />
                     <input type="submit" className="btn submit" value="Login" />
                     <p className="field">
-                        <span>If you don't have profile click <a href="#">here</a></span>
+                        <span>If you don't have profile click <Link to="#">here</Link></span>
                     </p>
                 </div>
             </form>
