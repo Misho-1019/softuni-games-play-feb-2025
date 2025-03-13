@@ -1,4 +1,4 @@
-import request from "../components/utils/request";
+import request from "../utils/request";
 
 const baseUrl = 'http://localhost:3030/jsonstore/games';
 
@@ -15,5 +15,8 @@ export default {
     },
     create(gameData) {
         return request.post(baseUrl, gameData)    
+    },
+    delete(gameId) {
+        return request.delete(`${baseUrl}/${gameId}`)
     }
 }
