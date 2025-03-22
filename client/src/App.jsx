@@ -4,6 +4,7 @@ import Header from './components/header/Header'
 import Home from './components/home/Home'
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
+import Logout from "./components/logout/Logout";
 import GameCatalog from "./components/game-catalog/GameCatalog";
 import GameCreate from "./components/game-create/GameCreate";
 import GameDetails from "./components/game-details/GameDetails";
@@ -35,6 +36,7 @@ function App() {
                         <Route path="/games/:gameId/edit" element={<GameEdit />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
+                        <Route path="/logout" element={<Logout />} />
                     </Routes>
 
                 </main>
