@@ -17,8 +17,6 @@ export default function Login() {
         userLoginHandler(authData)
     
         navigate(`/games`)
-
-        return values;
     }
 
     const [_, loginAction, isPending] = useActionState(loginHandler, { email: '', password: '' })

@@ -9,8 +9,8 @@ export const useLogin = () => {
 
     const login = async (email, password) => {
         const result = await request.post(
-            `${baseUrl}/login`, 
-            { email, password }, 
+            `${baseUrl}/login`,
+            { email, password },
             // { signal: abortRef.current.signal }
         )
 
@@ -29,7 +29,7 @@ export const useLogin = () => {
 }
 
 export const useRegister = () => {
-    const register = (email, password) => 
+    const register = (email, password) =>
         request.post(`${baseUrl}/register`, { email, password })
 
     return {
@@ -38,17 +38,24 @@ export const useRegister = () => {
 }
 
 export const useLogout = () => {
-    const { accessToken } = useContext(UserContext);
+    const { accessToken, userLogoutHandler } = useContext(UserContext);
 
-    const options = {
-        headers: {
-            'X-Authorization': accessToken,
+    useEffect(() => {
+        if (!accessToken) {
+            return;
         }
-    }
+        const options = {
+            headers: {
+                'X-Authorization': accessToken,
+            }
+        }
 
-    const logout = () => request.get(`${baseUrl}/logout`, null, options)
+        request.get(`${baseUrl}/logout`, null, options)
+            .then(userLogoutHandler)
 
+    }, [accessToken, userLogoutHandler])
+    
     return {
-        logout,
+        isLoggedOut: !!accessToken,
     }
 }
