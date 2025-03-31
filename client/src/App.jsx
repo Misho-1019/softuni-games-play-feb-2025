@@ -13,9 +13,10 @@ import GameEdit from "./components/game-edit/GameEdit";
 import './App.css'
 import { useState } from "react";
 import { UserContext } from "./context/UserContext";
+import usePersistedState from "./hooks/usePersistedState";
 
 function App() {
-    const [authData, setAuthData] = useState({})
+    const [authData, setAuthData] = usePersistedState('auth', {})
 
     const userLoginHandler = (resultData) => {
         setAuthData(resultData)

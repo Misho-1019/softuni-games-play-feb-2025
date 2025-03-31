@@ -20,7 +20,7 @@ export default function Home() {
                 {/* <!-- Display div: with information about every game (if any) --> */}
                 {latestGames.map(game => (
 
-                    <div className="game">
+                    <div className="game" key={game._id}>
                         <div className="image-wrap">
                             <img src={game.imageUrl} />
                         </div>
