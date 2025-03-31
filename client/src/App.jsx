@@ -9,6 +9,7 @@ import GameCatalog from "./components/game-catalog/GameCatalog";
 import GameCreate from "./components/game-create/GameCreate";
 import GameDetails from "./components/game-details/GameDetails";
 import GameEdit from "./components/game-edit/GameEdit";
+import { UserProvider } from "./providers/UserProvider";
 
 import './App.css'
 import { useState } from "react";
@@ -16,18 +17,8 @@ import { UserContext } from "./context/UserContext";
 import usePersistedState from "./hooks/usePersistedState";
 
 function App() {
-    const [authData, setAuthData] = usePersistedState('auth', {})
-
-    const userLoginHandler = (resultData) => {
-        setAuthData(resultData)
-    }
-
-    const userLogoutHandler = () => {
-        setAuthData({})
-    }
-
     return (
-        <UserContext.Provider value={{...authData, userLoginHandler, userLogoutHandler}}>
+        <UserProvider>
             <div id="box">
                 <Header />
 
@@ -36,17 +27,15 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/games" element={<GameCatalog />} />
-                        <Route path="/games/create" element={<GameCreate />} />
                         <Route path="/games/:gameId/details" element={<GameDetails />} />
                         <Route path="/games/:gameId/edit" element={<GameEdit />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
-                        <Route path="/logout" element={<Logout />} />
                     </Routes>
 
                 </main>
             </div>
-        </UserContext.Provider>
+        </UserProvider>
     )
 }
 
