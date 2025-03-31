@@ -11,11 +11,8 @@ export default function GameDetails() {
     const { gameId } = useParams();
     const { game } = useGame(gameId);
     const { deleteGame } = useDeleteGame()
-    const { comments, setComments } = useComments(gameId)
     const { create } = useCreateComment()
-
-    console.log(comments);
-    
+    const { comments, addComment } = useComments(gameId)
 
     const gameDeleteClickHandler = async () => {
         const hasConfirm = confirm(`Are you sure you want to delete this ${game.title} game?`)
@@ -29,8 +26,10 @@ export default function GameDetails() {
 
     const commentCreateHandler = async (comment) => {
         const newComment = await create(gameId, comment)
+        const commentResult = await create(gameId, comment)
 
-        setComments(state => [...state, newComment])
+        // setComments(state => [...state, commentResult])
+        addComment(commentResult)
     }
 
     const isOwner = userId === game._ownerId
