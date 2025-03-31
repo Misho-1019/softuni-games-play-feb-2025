@@ -10,6 +10,8 @@ export default function ShowComments({
                     ? comments.map(({ _id, _ownerId, comment }) => (
                         <li key={_id} className="comment">
                             <p>{_ownerId}: {comment}</p>
+                    ? comments.map(({ _id, comment, pending, author }) => (
+                            <p>{author.email}: {comment}</p>
                         </li>
                     ))
                     : <p className="no-comment">No comments.</p>

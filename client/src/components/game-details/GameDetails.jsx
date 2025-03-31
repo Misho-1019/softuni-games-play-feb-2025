@@ -25,11 +25,23 @@ export default function GameDetails() {
     }
 
     const commentCreateHandler = async (comment) => {
-        const newComment = await create(gameId, comment)
+        const newOptimisticComment = {
+            _id: uuid(),
+            _ownerId: userId,
+            gameId,
+            comment,
+            pending: true,
+            author: {
+                email,
+            }
+        }
+
+        setOptimisticComments(newOptimisticComment)
+
         const commentResult = await create(gameId, comment)
 
         // setComments(state => [...state, commentResult])
-        addComment(commentResult)
+        addComment({...commentResult, author: { email }})
     }
 
     const isOwner = userId === game._ownerId
