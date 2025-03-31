@@ -10,9 +10,10 @@ import GameCreate from "./components/game-create/GameCreate";
 import GameDetails from "./components/game-details/GameDetails";
 import GameEdit from "./components/game-edit/GameEdit";
 import { UserProvider } from "./providers/UserProvider";
+import AuthGuard from "./components/guards/AuthGuard";
 
 import './App.css'
-import AuthGuard from "./components/guards/AuthGuard";
+import AuthGuardBasic from "./components/guards/AuthGuardBasic";
 
 function App() {
     return (
@@ -31,8 +32,10 @@ function App() {
                             <Route path="/games/:gameId/edit" element={<GameEdit />} />
                             <Route path="/logout" element={<Logout />} />
                         </Route>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
+                        <Route element={<AuthGuardBasic />}>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                        </Route>
                     </Routes>
 
                 </main>

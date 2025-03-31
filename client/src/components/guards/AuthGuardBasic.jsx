@@ -1,18 +1,12 @@
-import { Navigate } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import useAuth from "../../hooks/useAuth";
 
-export default function AuthGuard({
-    children,
-}) {
+export default function AuthGuardBasic() {
     const { isAuthenticated } = useAuth()
 
-    if (!isAuthenticated) {
-        return <Navigate to='/login' />
+    if (isAuthenticated) {
+        return <Navigate to='/games' />
     }
 
-    return (
-        <>
-            {children}
-        </>
-    )
+    return <Outlet />
 }
