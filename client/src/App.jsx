@@ -12,9 +12,7 @@ import GameEdit from "./components/game-edit/GameEdit";
 import { UserProvider } from "./providers/UserProvider";
 
 import './App.css'
-import { useState } from "react";
-import { UserContext } from "./context/UserContext";
-import usePersistedState from "./hooks/usePersistedState";
+import AuthGuard from "./components/guards/AuthGuard";
 
 function App() {
     return (
@@ -28,7 +26,11 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/games" element={<GameCatalog />} />
                         <Route path="/games/:gameId/details" element={<GameDetails />} />
-                        <Route path="/games/:gameId/edit" element={<GameEdit />} />
+                        <Route element={<AuthGuard />} >
+                            <Route path="/games/create" element={<GameCreate />} />
+                            <Route path="/games/:gameId/edit" element={<GameEdit />} />
+                            <Route path="/logout" element={<Logout />} />
+                        </Route>
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                     </Routes>
