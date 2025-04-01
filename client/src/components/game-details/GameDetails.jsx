@@ -4,15 +4,19 @@ import ShowComments from "../show-comments/ShowComments";
 import { useDeleteGame, useGame } from "../../api/gameApi";
 import useAuth from "../../hooks/useAuth";
 import { useComments, useCreateComment } from "../../api/commentApi";
+import { useOptimistic } from "react";
+import { v4 as uuid } from "uuid";
 
 export default function GameDetails() {
     const navigate = useNavigate()
-    const { email, _id: userId } = useAuth()
+    const { email, userId } = useAuth()
     const { gameId } = useParams();
     const { game } = useGame(gameId);
     const { deleteGame } = useDeleteGame()
     const { create } = useCreateComment()
     const { comments, addComment } = useComments(gameId)
+    // const [optimisticComments, setOptimisticComments] = useOptimistic(comments, (state, newComment) => [...state, newComment])
+    const [optimisticComments, setOptimisticComments] = useOptimistic(comments)
 
     const gameDeleteClickHandler = async () => {
         const hasConfirm = confirm(`Are you sure you want to delete this ${game.title} game?`)
@@ -24,7 +28,9 @@ export default function GameDetails() {
         navigate('/games')
     }
 
-    const commentCreateHandler = async (comment) => {
+    const commentCreateHandler = async (formData) => {
+        const comment = formData.get('comment')
+
         const newOptimisticComment = {
             _id: uuid(),
             _ownerId: userId,
@@ -36,7 +42,7 @@ export default function GameDetails() {
             }
         }
 
-        setOptimisticComments(newOptimisticComment)
+        setOptimisticComments((optimisticState) => [...optimisticState, newOptimisticComment])
 
         const commentResult = await create(gameId, comment)
 
@@ -63,7 +69,7 @@ export default function GameDetails() {
                     {game.summary}
                 </p>
 
-                <ShowComments comments={comments} />
+                <ShowComments comments={optimisticComments} />
 
                 {isOwner && (
                     <div className="buttons">
